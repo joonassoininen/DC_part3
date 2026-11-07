@@ -1,6 +1,5 @@
 #!/bin/sh
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 if [ $# -ne 2 ]; then
   echo "Usage: ./builder.sh <github-repo> <docker-image>"
@@ -15,7 +14,7 @@ if [ -z "$DOCKER_USER" ] || [ -z "$DOCKER_PWD" ]; then
   exit 1
 fi
 
-rm -rf /tmp/builder_repo
+
 git clone "https://github.com/$GITHUB_REPO.git" /tmp/builder_repo || exit 1
 cd /tmp/builder_repo || exit 1
 
