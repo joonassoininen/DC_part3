@@ -1,0 +1,21 @@
+FROM golang:1.16-alpine AS build-stage
+
+WORKDIR /3_8
+
+COPY code/example-backend .
+
+ENV CGO_ENABLED=0
+
+RUN go build && go test ./...
+
+FROM scratch
+
+WORKDIR /3_8
+
+COPY --from=build-stage /3_8/server .
+
+ENV REQUEST_ORIGIN=http://localhost:5001
+
+EXPOSE 8080
+
+CMD ["./server"]
