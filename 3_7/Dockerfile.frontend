@@ -8,7 +8,7 @@ COPY code/example-frontend .
 ENV REACT_APP_BACKEND_URL=http://localhost:8080
 
 RUN npm install -g serve && adduser -D appuser && chown -R appuser . && \
-    su appuser -c "npm install && npm run build && npm cache clean --force && rm -rf src node_modules" && \
+    su appuser -c "npm install && npm run build && npm cache clean --force && rm -rf src node_modules"
 
 USER appuser
 

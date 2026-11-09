@@ -8,6 +8,8 @@ COPY --chown=appuser:appuser code/example-backend .
 
 USER appuser
 
+ENV CGO_ENABLED=0
+
 RUN go build && go test ./... && go clean -cache -modcache
 
 ENV REQUEST_ORIGIN=http://localhost:5001
