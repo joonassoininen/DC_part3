@@ -1,0 +1,20 @@
+# use here COPY 1_12 .
+FROM ubuntu:24.04
+
+WORKDIR /3_5
+
+COPY code/example-frontend .
+
+USER appuser
+
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+EXPOSE 5001
+
+RUN apt-get update && apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash && apt-get install -y nodejs && \
+    npm install -g serve && useradd -m appuser && chown appuser . && \
+    su appuser -c "npm install && npm run build && npm cache clean --force && rm -rf src node_modules" && \
+    apt-get purge -y --auto-remove curl && rm -rf /var/lib/apt/lists/*
+
+CMD ["serve","-s","-l","5001", "build"]

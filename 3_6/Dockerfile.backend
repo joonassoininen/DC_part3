@@ -1,0 +1,17 @@
+FROM golang:1.16
+
+WORKDIR /3_5
+
+RUN useradd -m appuser && chown appuser .
+
+COPY --chown=appuser:appuser code/example-backend .
+
+USER appuser
+
+RUN go build && go test ./... && go clean -cache -modcache
+
+ENV REQUEST_ORIGIN=http://localhost:5001
+
+EXPOSE 8080
+
+CMD ["./server"]
