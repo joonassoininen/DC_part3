@@ -9,7 +9,7 @@ ENV REACT_APP_BACKEND_URL=http://localhost:8080
 
 RUN apt-get update && apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_16.x | bash && apt-get install -y nodejs && \
-    npm install -g serve && useradd -m appuser && chown appuser . && \
+    npm install -g serve && useradd -m appuser && chown -R appuser . && \
     su appuser -c "npm install && npm run build && npm cache clean --force && rm -rf src node_modules" && \
     apt-get purge -y --auto-remove curl && rm -rf /var/lib/apt/lists/*
 
